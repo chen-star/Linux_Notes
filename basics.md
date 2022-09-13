@@ -87,3 +87,53 @@ Hardware
   * To send stdout and stderr of command to file_1.
 * `command &`
   * Run command in background mode.
+
+
+---
+
+### Devices
+* device files
+  * devices are usually accessible as device files (under /dev). (Not all device has device files)
+  * if we do ls -l in /dev, the first character shows up is the device mode.
+    * b: block (eg. disk)
+      * Kernel accesses data in fixed chunks.
+      * total size if fixed.
+    * c: character (eg. printer)
+      * Kernel reads/writes data streams.
+      * don't have a size.
+    * p: pipe
+      * like a character device, but at the other end is I/O stream instead of a driver.
+    * s: socket
+      * usually used for inter-process communication.
+      * often found outside /dev.
+  * file structure in /dev:
+    * /dev/sd*
+      * most hard disks have a sd prefix
+    * /dev/xvd*, /dev/vd*
+      * some disk devices are optimized for virtual
+    * /dev/nvme*
+      * none-volatile memory express
+    * /dev/dm-*, /dev/mapper/*
+      * a level up from disk and other direct block storage on some system is LVM, which uses kernel system called the device mapper.
+    * /dev/sr*
+      * read-only, optical devices
+    * /dev/hd*
+      * older type of storage bus
+    * /dev/tty*, /dev/pts/*, /dev/tty
+      * terminals
+
+
+* sysfs
+  * To provide a uniform view for attached devices based on their actual hardware attributes, the Linux kernel offers sysfs interface. 
+  * in /sys/devices
+
+
+* `dd`
+  * is a useful command to read from an input file or stream, and write to a file or stream.
+  * eg. `dd if=/dev/zero of=new_file bs=1024 count=1 skip=2`
+    * if: input file
+    * of: output file
+    * bs: block size to read & write each time
+      * ibs, obs
+    * count: # of blocks to read
+    * skip: skip first n blocks
