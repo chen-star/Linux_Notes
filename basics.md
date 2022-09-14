@@ -106,21 +106,6 @@ Hardware
     * s: socket
       * usually used for inter-process communication.
       * often found outside /dev.
-  * file structure in /dev:
-    * /dev/sd*
-      * most hard disks have a sd prefix
-    * /dev/xvd*, /dev/vd*
-      * some disk devices are optimized for virtual
-    * /dev/nvme*
-      * none-volatile memory express
-    * /dev/dm-*, /dev/mapper/*
-      * a level up from disk and other direct block storage on some system is LVM, which uses kernel system called the device mapper.
-    * /dev/sr*
-      * read-only, optical devices
-    * /dev/hd*
-      * older type of storage bus
-    * /dev/tty*, /dev/pts/*, /dev/tty
-      * terminals
 
 
 * sysfs
@@ -137,3 +122,14 @@ Hardware
       * ibs, obs
     * count: # of blocks to read
     * skip: skip first n blocks
+
+
+### Disk & File system
+
+* relationship
+  * disk (physical device) -> 1+ partitions (continuous blocks on a disk) -> 1+ volume <-> 1 filesystem
+
+* swap space
+  * Not every partition on a disk contains a filesystem. It's also possible to augment the RAM on a machine with disk space. 
+  * The disk space used to store memory pages is called swap space. 
+  * use `free` to see current swap usage. 
