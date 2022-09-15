@@ -43,8 +43,8 @@ Hardware
 * `/sbin`: sys administration binaries
 * `/lib`: essential shared libs needed by essential binaries in /bin and /sbin
 * `/usr/lib`: libs needed by /usr/bin
-* `/boot`: static boot files(eg. kernel program)
-* `/opt`: optional packages (eg. homebrew)
+* `/boot`: static boot files used by the bootloader(eg. kernel program)
+* `/opt`: optional add-on packages (eg. homebrew)
 
 
 * `/etc`: system-wide config files
@@ -53,12 +53,12 @@ Hardware
 * `/var`: writable counterpart to /usr(eg. log files would normally be written to /var/log)
 
 
-* `/proc`: kernel & running process files
+* `/proc`: kernel & running process files(only exist in memory)
 * `/run`: runtime state files
 * `/srv`: data for services provided by the system
 
 
-* `/dev`: device files
+* `/dev`: device files (eg. disk, keyboard)
 * `/mnt`: temporary mount points
 * `/media`: contains subdirectories where removable media devices insert into the computer are mounted.
 
@@ -94,18 +94,6 @@ Hardware
 ### Devices
 * device files
   * devices are usually accessible as device files (under /dev). (Not all device has device files)
-  * if we do ls -l in /dev, the first character shows up is the device mode.
-    * b: block (eg. disk)
-      * Kernel accesses data in fixed chunks.
-      * total size if fixed.
-    * c: character (eg. printer)
-      * Kernel reads/writes data streams.
-      * don't have a size.
-    * p: pipe
-      * like a character device, but at the other end is I/O stream instead of a driver.
-    * s: socket
-      * usually used for inter-process communication.
-      * often found outside /dev.
 
 
 * sysfs
@@ -129,7 +117,63 @@ Hardware
 * relationship
   * disk (physical device) -> 1+ partitions (continuous blocks on a disk) -> 1+ volume <-> 1 filesystem
 
+
 * swap space
   * Not every partition on a disk contains a filesystem. It's also possible to augment the RAM on a machine with disk space. 
   * The disk space used to store memory pages is called swap space. 
   * use `free` to see current swap usage. 
+
+
+* soft link & hard link
+  * inode: pointer or id of a file on the hard disk
+  * soft link: link --> file_node
+    * link will be removed if file is removed or renamed
+    * `ln -s`
+  * hard link: link --> inode
+    * deleting, renaming or moving the original file will not affect the hard link
+    * `ln`
+
+
+* file system commands
+  * `ls -l`
+  ~~~
+  Type         #of links  owner group   size  mon  day  year  name
+  drwxr-xr-x.  2          root  root    6     Aug  9    2021  /var/log
+  -rwxrwxrwx.  1          root  root    11    Mar  2    2022  file_1.txt
+  lrwxrwxrwx.  1          root  root    10    Aug  9    2021  mail -> spool/mail
+  ~~~
+  file types:
+  ~~~
+  symbol    type
+  -         regular file
+  d         directory
+  l         link
+  c         character device file
+  s         socket
+  p         named pipe
+  b         block device
+  
+  * b: block (eg. disk)
+      * Kernel accesses data in fixed chunks.
+      * total size if fixed.
+  * c: character (eg. printer)
+    * Kernel reads/writes data streams.
+    * don't have a size.
+  * p: pipe
+    * like a character device, but at the other end is I/O stream instead of a driver.
+  * s: socket
+    * usually used for inter-process communication.
+    * often found outside /dev.
+  ~~~
+
+  * copy file/dir
+    * file: `cp <src_file> <dest_file>`
+    * dir: `cp -R <src_dir> <dest_dir>` (-R means recursively)
+
+  * find file/dir
+    * find: `find / -name "ifcfg-eth1"`
+    * locate: `locate "ifcfg-eth1"`
+    * diff
+      * locate uses a prebuilt database, which should be regularly updated;(faster & inaccurate) while find iterates over a filesystem. (slower & accurate)
+      * to update locate database, run updatedb
+  
