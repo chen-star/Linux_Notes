@@ -19,7 +19,6 @@ Hardware
       * Determine which process to run on CPU
     * Memory
       * Keep track of all memory - what is currently allocated to a particular process, what might be shared between processes, and what is free
-      * 
     * Device drivers
       * Acts as an interface between hardware and processes
     * Sys calls and supports
@@ -73,20 +72,24 @@ Hardware
 
 ---
 
-### Shell input / output redirection
-* `command > file_1`
-  * To send the stdout of command to file_1; if file_1 exists, erasing the original file first.
-* `command >> file_1`
-  * To append the stdout of command to file_1.
-* `command_1 | command_2`
-  * To send stdout of command_1 to the stdin of command_2.
-* `command > file_1 2> file_2`
-  * To send stdout of command to file_1, send stderr of command to file_2.
-  * 2 here is the stream id of stderr. The stream id of stdout is 1. 
-* `command > file_1 2>&1`
-  * To send stdout and stderr of command to file_1.
-* `command &`
-  * Run command in background mode.
+### Linux Command
+
+* **Shell input / output redirection**
+  * `command > file_1`
+    * To send the stdout of command to file_1; if file_1 exists, erasing the original file first.
+  * `command >> file_1`
+    * To append the stdout of command to file_1.
+  * `command_1 | command_2`
+    * To send stdout of command_1 to the stdin of command_2.
+  * `command > file_1 2> file_2`
+    * To send stdout of command to file_1, send stderr of command to file_2.
+    * 2 here is the stream id of stderr. The stream id of stdout is 1. 
+  * `command > file_1 2>&1`
+    * To send stdout and stderr of command to file_1.
+  * `command &`
+    * Run command in background mode.
+
+
 
 
 ---
@@ -166,9 +169,11 @@ Hardware
     * often found outside /dev.
   ~~~
 
+
   * copy file/dir
     * file: `cp <src_file> <dest_file>`
     * dir: `cp -R <src_dir> <dest_dir>` (-R means recursively)
+
 
   * find file/dir
     * find: `find / -name "ifcfg-eth1"`
@@ -176,4 +181,32 @@ Hardware
     * diff
       * locate uses a prebuilt database, which should be regularly updated;(faster & inaccurate) while find iterates over a filesystem. (slower & accurate)
       * to update locate database, run updatedb
-  
+
+
+  * permission & ownership of file/dir
+    * permission:
+      * 3 types of permissions:
+        * r
+        * w
+        * x: execute
+          * for dir, can go (cd) into the dir
+      * 3 levels for each type:
+        * u: user
+        * g: group
+        * o: other
+      * `chmod`: change permission
+        * `chmod go-w file_1`: remove g,o's w permission
+        * `chmod a-r file_2`: remove u,g,o r permission
+      * using ACL
+        * add permission:
+          * `setfacl -m u:<user_name>:rwx file_1` / `setfacl -m g:<group_name>:rwx file_2` / `setfacl -rm g:<group_name>:rwx dir_1`
+        * remove permission:
+          * `setfacl -x u:<user_name>:wx file_1`
+        * check ACL:
+          * `getacl file_1`
+    * ownership:
+      * 3 owners of a file/dir:
+        * u
+        * g
+      * change ownership: `chown <user_name> file_1`
+      * change group ownership: `chgrp <group_name> file_1`
