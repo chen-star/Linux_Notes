@@ -258,6 +258,31 @@ Hardware
         * `grep -i <keyword> file_1`: case insensitive
         * `grep -c <keyword> file_1`: count # of lines matched
         * `grep -v <keyword> file_1`: print lines without keyword
+      * egrep: seach 1+ keyword
+        * `egrep -i "<keyword_1>|<keyword_2>" file_1`
     * `sort`
+      * sort all lines in a file/output
+      * `sort -k2 file_1`: sort by the 2nd field
+      * `sort -r file_1`: sort in reverse order
     * `uniq`
+      * remove duplicate lines
+      * always sort first, then do uniq `sort file_1 | uniq -c`(also print repeating times)
     * `wc`
+      * print #of lines(-l), #of words(-w), #of byte(-c)
+
+    
+  * compare files
+    * `diff`: compare line by line
+    * `cmp`: compare byte by byte
+
+  
+  * compress/uncompress file/dir
+    * `tar`
+      * take many files into one tar
+    * `gzip`
+    * `gzip -d` / `gunzip`
+
+
+  * combine/split files
+    * `cat file_1 file_2 > file_3`: combine
+    * `split file_3`
