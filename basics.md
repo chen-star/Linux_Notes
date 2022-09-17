@@ -72,15 +72,25 @@ Hardware
 
 ---
 
-### Linux Command
+### Linux Command General
 
 * **Shell input / output redirection**
+  * 3 redirects:
+    * stdin: file descriptor is 0
+    * stdout: file descriptor is 1; default is terminal
+    * stderr: file descriptor is 2
+
+
   * `command > file_1`
-    * To send the stdout of command to file_1; if file_1 exists, erasing the original file first.
+    * To override the stdout of command to file_1; if file_1 exists, erasing the original file first.
   * `command >> file_1`
     * To append the stdout of command to file_1.
+  * `command < file_1`
+    * To feed command with file_1's content.
   * `command_1 | command_2`
     * To send stdout of command_1 to the stdin of command_2.
+  * `command_1 | tee (-a) file_1`
+    * To both send stdout of command_1 to stdout(terminal) and override/(-a: append) file_1.
   * `command > file_1 2> file_2`
     * To send stdout of command to file_1, send stderr of command to file_2.
     * 2 here is the stream id of stderr. The stream id of stdout is 1. 
@@ -114,6 +124,8 @@ Hardware
     * count: # of blocks to read
     * skip: skip first n blocks
 
+
+---
 
 ### Disk & File system
 
@@ -170,6 +182,19 @@ Hardware
   ~~~
 
 
+  * display file
+    * `cat file_1`
+      * entire content
+    * `more file_1`
+      * one page at a time, can read next line or next page
+    * `less file_1`
+      * like more, one page at a time, can read backwards
+    * `head -2 file_1`
+      * the first 2 lines
+    * `tail -3 file_1`
+      * the last 3 lines
+
+
   * copy file/dir
     * file: `cp <src_file> <dest_file>`
     * dir: `cp -R <src_dir> <dest_dir>` (-R means recursively)
@@ -210,3 +235,29 @@ Hardware
         * g
       * change ownership: `chown <user_name> file_1`
       * change group ownership: `chgrp <group_name> file_1`
+
+  
+  * text processing
+    * `cut`
+      * for each line in the file, get certain chars
+      * eg. 
+        * `cut -c1-3,6-8 file_1`: for each line in file_1, get 1-3 chars and 6-8 chars
+        * `cut -d: -f 6-7 file_1`: for each line in file_1, split by :, get fields 6-7
+    * `awk`
+      * for each line in the file or output, get certain columns (default separated by space)
+      * eg.
+        * `awk '{print $1, $3}' file_1`: print the file_1's 1st and 3rd field
+        * `ls -l | awk '{print $NF}'`: print the last field of command output 
+        * `awk -F: '/Alex/ {print $1}' file_1`: specify delimiter as :, only print the 1st field of the line contains Alex
+        * `awk 'length($0) > 15' file_1`: print the lines whose length > 15
+        * `awk '{if($6 == "alex") print $0;}'`: print the lines whose 6th field is alex
+    * `grep/egrep`
+      * search line by line
+      * eg.
+        * `grep -n <keyword> file_1`: search for lines with keyword in them, with line # printed
+        * `grep -i <keyword> file_1`: case insensitive
+        * `grep -c <keyword> file_1`: count # of lines matched
+        * `grep -v <keyword> file_1`: print lines without keyword
+    * `sort`
+    * `uniq`
+    * `wc`
