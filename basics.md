@@ -149,7 +149,7 @@ Hardware
     * `ln`
 
 
-* file system commands
+* commands
   * `ls -l`
   ~~~
   Type         #of links  owner group   size  mon  day  year  name
@@ -286,3 +286,49 @@ Hardware
   * combine/split files
     * `cat file_1 file_2 > file_3`: combine
     * `split file_3`
+
+
+  * `sed`
+    * replace a str in a file with a new str
+    * eg.
+      * `sed -i 's/{to_replace_word}/{new_word}/g' file_1`: s replace, g global, -i make change to the file
+      * `sed '/^$/d file_1`: delete all empty lines
+
+
+---
+
+### User Account Management
+* when a user is created, files will be created in:
+  * /etc/passwd
+  * /etc/group
+  * /etc/shadow
+
+
+* commands
+  * user
+    * add a user
+      * `useradd -g <group_name> -s /bin/bash -c "user description" -m -d /home/<user_name> <user_name>`
+
+    * delete a user
+      * `userdel <user_name>`
+
+    * view user id
+      * `id <user_name>`
+
+    * switch user
+      * `su <user_name>`
+
+  * group
+    * add a group
+      * `groupadd <group_name>`
+      
+    * delete a group
+      * `groupdel <group_name>`
+      
+    * view all groups
+      * `cat /etc/group`
+
+
+---
+
+### System Administration
