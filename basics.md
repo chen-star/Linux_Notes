@@ -182,6 +182,10 @@ Hardware
   ~~~
 
 
+  * `df -h`
+    * disk partition info
+
+
   * display file
     * `cat file_1`
       * entire content
@@ -318,6 +322,7 @@ Hardware
     * switch user
       * `su <user_name>`
 
+
   * group
     * add a group
       * `groupadd <group_name>`
@@ -332,3 +337,65 @@ Hardware
 ---
 
 ### System Administration
+* commands
+  * system utils
+    * `date`: current system dat time
+    * `uptime`
+    * `hostname`
+    * `which <command>`: where is the command located
+  
+  
+  * process, job, scheduling
+    * `systemctl`
+      * `systemctl status/start/stop <servicename>.service`
+      * `systemctl enable/disable <servicename>.service`: enable means auto start when sys reboots
+      * `systemctl restart/reload <servicename>.service`
+      * `systemctl list-units --all`: list all services and their status (units in systemctl means a service)
+      * to add a service under systemctl management, create a unit file in /etc/systemd/system/<servicename>.service
+
+    * `ps`
+      * displays all currently running processes
+      * `ps`: show running processes of the current shell
+      * `ps -e`: show all running processes in the system
+      * `ps aux`: display in aux format
+      * `ps -ef`: show in full info
+
+    * `top`
+      * real-time view of running processes
+      
+    * `kill`
+      * terminate a process manually
+    
+    * `crontab`
+      * schedule cron tasks
+      * cron time format
+        ~~~
+          * * * * *
+          ^ minute
+            ^ hour
+              ^ day of the month
+                ^ month
+                  ^ day of the week
+        ~~~
+      
+    * `at`
+      * schedule one-time task (ad-hoc task)
+
+    * log directory: `/var/log`
+
+
+* env variables
+  * view all env vars
+    * `env`
+
+  * view 1 env var
+    * `echo ${name}`
+
+  * set env var
+    * `export {name}={val}`
+
+  * set env var permanently
+    * `vi ./bashrc`
+
+  * set env var permanently globally(for all users)
+    * `vi /etc/bashrc`
