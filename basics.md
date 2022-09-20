@@ -399,3 +399,42 @@ Hardware
 
   * set env var permanently globally(for all users)
     * `vi /etc/bashrc`
+
+
+---
+
+### Shell Script
+* basics
+  * shell (start of the file): `#!/bin/bash`
+  * comments: `# comments`
+  * commands
+  * statements: if, while, for etc.
+
+
+  * run a shell script:
+    * use absolute path
+    * or called from current location with ./script/bash
+
+
+* statements
+  * `if-then`
+    * ~~~
+      if [ condition ]
+      then ...
+      else ...
+      fi
+      ~~~
+  
+  * `for`
+    * ~~~
+      for 
+      do ...
+      done
+      ~~~
+      
+  * `while`
+    * ~~~
+      while [ condition ]
+      do ...
+      done
+      ~~~
